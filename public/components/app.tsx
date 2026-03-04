@@ -41,10 +41,12 @@ import { QuerySetView } from './query_set';
 import { QuerySetCreate } from './query_set';
 import { TemplateType, routeToTemplateType } from './experiment/configuration/types';
 import { TemplateConfigurationWithRouter } from './experiment/configuration/template_configuration';
+import { DashboardsViewWithRouter } from './dashboards';
 
 enum Navigation {
   SRW = 'Search Relevance Workbench',
   Overview = 'Overview',
+  Dashboards = 'Dashboards',
   Experiments = 'Experiments',
   ExperimentsSingleQueryComparison = 'Single Query Comparison',
   ExperimentsQuerySetComparison = 'Query Set Comparison',
@@ -108,6 +110,14 @@ const SearchRelevancePage = ({
         );
       },
       items: [
+        {
+          name: Navigation.Dashboards,
+          id: Navigation.Dashboards,
+          onClick: () => {
+            history.push(Routes.Dashboards);
+          },
+          isSelected: location.pathname === Routes.Dashboards,
+        },
         {
           name: Navigation.Experiments,
           id: Navigation.Experiments,
@@ -224,6 +234,13 @@ const SearchRelevancePage = ({
             exact
             render={() => {
               return <ExperimentListingWithRoute http={http} />;
+            }}
+          />
+          <Route
+            path={Routes.Dashboards}
+            exact
+            render={() => {
+              return <DashboardsViewWithRouter http={http} />;
             }}
           />
           <Route

@@ -16,6 +16,9 @@ import {
   EuiSpacer,
   EuiBadge,
   EuiHealth,
+  EuiCard,
+  EuiIcon,
+  EuiFlexGroup,
 } from '@elastic/eui';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import moment from 'moment';
@@ -516,6 +519,25 @@ export const ExperimentListing: React.FC<ExperimentListingProps> = ({ http, hist
     }
   };
 
+  // Render empty state card when no experiments
+  const renderEmptyStateCard = () => (
+    <EuiFlexGroup gutterSize="l" justifyContent="center">
+      <EuiFlexItem grow={false} style={{ maxWidth: 400 }}>
+        <EuiCard
+          icon={<EuiIcon size="xxl" type="discuss" />}
+          title="Please tell me more about your Search Use Case"
+          description="Get AI-powered insights and recommendations for your search relevance needs."
+          onClick={() => history.push(Routes.Dashboards)}
+          footer={
+            <EuiButton onClick={() => history.push(Routes.Dashboards)}>
+              Go to Dashboards
+            </EuiButton>
+          }
+        />
+      </EuiFlexItem>
+    </EuiFlexGroup>
+  );
+
   return (
     <EuiPageTemplate paddingSize="l" restrictWidth="100%">
       <EuiPageHeader
@@ -548,6 +570,14 @@ export const ExperimentListing: React.FC<ExperimentListingProps> = ({ http, hist
       <TemplateCards history={history} onClose={() => {}} />
 
       <EuiSpacer size="m" />
+
+      {/* Show empty state card when no experiments */}
+      {!isLoading && tableData.length === 0 && !error && (
+        <>
+          {renderEmptyStateCard()}
+          <EuiSpacer size="m" />
+        </>
+      )}
 
       <EuiFlexItem>
         <EuiText>Click on an experiment id to view details.</EuiText>

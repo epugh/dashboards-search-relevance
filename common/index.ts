@@ -58,6 +58,7 @@ export enum RouteTemplateType {
 
 export enum Routes {
   Home = '/',
+  Dashboards = '/dashboards',
   ExperimentListing = '/experiment',
   ExperimentView = '/experiment/view/:entityId',
   ExperimentViewPrefix = '/experiment/view',
